@@ -163,9 +163,10 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 0, // Spazio tra il logo e il testo successivo
     marginTop: 0, 
+    paddingHorizontal: 0,
   },
   textSection: {
-    marginBottom: 40,
+    marginBottom: 120,
     paddingHorizontal: 20,  // Aggiungi padding orizzontale solo al testo
     paddingTop: 20,  
   },
