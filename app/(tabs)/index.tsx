@@ -2,7 +2,6 @@ import React, { useRef, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 
-// --- MODIFICA 1: Re-importata l'immagine del logo ---
 import LogoImage from '../../assets/images/logo.jpeg'; 
 import LeftCurtainImage from '../../assets/images/curtain-left.png';
 import RightCurtainImage from '../../assets/images/curtain-right.png';
@@ -13,13 +12,10 @@ export default function HomeScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
-  // --- MODIFICA 2: Ripristinato lo stato e il calcolo per l'altezza dinamica del logo ---
-  const [logoHeight, setLogoHeight] = useState(300); // Valore di fallback
+  const [logoHeight, setLogoHeight] = useState(300); 
 
-  Image.getSize(String(LogoImage), (width, height) => {
-    // Calcola l'altezza dell'immagine per adattarla alla larghezza dello schermo meno il padding
-    const imageWidth = screenWidth - 40; // 20 di padding a sinistra e 20 a destra
-    const calculatedHeight = (imageWidth / width) * height;
+  Image.getSize(LogoImage, (width, height) => {
+    const calculatedHeight = (screenWidth / width) * height;
     setLogoHeight(calculatedHeight);
   });
   
@@ -76,7 +72,6 @@ export default function HomeScreen() {
       >
     
         <View style={styles.content}>
-          {/* --- MODIFICA 3: Aggiunto il componente Image per il logo --- */}
           <Image
             source={LogoImage}
             style={[styles.logoImage, { height: logoHeight }]}
@@ -164,10 +159,9 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 20,
   },
-  // --- MODIFICA 4: Aggiunto lo stile per il logo ---
   logoImage: {
     width: '100%',
-    marginBottom: 40, // Spazio tra il logo e il testo successivo
+    marginBottom: 2, // Spazio tra il logo e il testo successivo
   },
   textSection: {
     marginBottom: 40,
