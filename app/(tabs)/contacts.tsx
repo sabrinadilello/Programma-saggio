@@ -19,13 +19,11 @@ export default function ContactsScreen() {
   const [imageHeight, setImageHeight] = useState(300); // Un valore di fallback
 
   // Calcoliamo l'altezza corretta solo dopo aver ottenuto le dimensioni dell'immagine
-  Image.getSize(StaffImage, (width, height) => {
-    // Calcoliamo l'altezza che l'immagine deve avere per mantenere le proporzioni
-    // quando la sua larghezza è pari a quella dello schermo (meno il padding)
-    const calculatedHeight = ((screenWidth - 40) / width) * height;
-    if (imageHeight !== calculatedHeight) {
-      setImageHeight(calculatedHeight);
-    }
+Image.getSize(StaffImage, (width, height) => {
+  // Calcoliamo l'altezza che l'immagine deve avere per mantenere le proporzioni
+  // quando la sua larghezza è pari a quella dello schermo (meno il padding)
+  const calculatedHeight = ((screenWidth - 40) / width) * height;
+  setImageHeight(calculatedHeight);
   });
   
   useFocusEffect(
