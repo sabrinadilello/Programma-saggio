@@ -157,11 +157,11 @@ const styles = StyleSheet.create({
     paddingBottom: 120,
   },
   content: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
   },
   logoImage: {
     width: '100%',
-    marginBottom: 2, // Spazio tra il logo e il testo successivo
+    marginBottom: 0, // Spazio tra il logo e il testo successivo
   },
   textSection: {
     marginBottom: 40,
