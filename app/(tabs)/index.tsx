@@ -153,8 +153,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F8',
   },
   scrollContentContainer: {
-    paddingTop: 20, 
-    paddingBottom: 120,
+    paddingTop: 0, 
+    paddingBottom: 0,
   },
   content: {
     paddingHorizontal: 0,
@@ -162,9 +162,12 @@ const styles = StyleSheet.create({
   logoImage: {
     width: '100%',
     marginBottom: 0, // Spazio tra il logo e il testo successivo
+    marginTop: 0, 
   },
   textSection: {
     marginBottom: 40,
+    paddingHorizontal: 20,  // Aggiungi padding orizzontale solo al testo
+    paddingTop: 20,  
   },
   introText: {
     fontSize: 16,
