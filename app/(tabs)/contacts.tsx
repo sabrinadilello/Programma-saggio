@@ -23,7 +23,9 @@ export default function ContactsScreen() {
     // Calcoliamo l'altezza che l'immagine deve avere per mantenere le proporzioni
     // quando la sua larghezza è pari a quella dello schermo (meno il padding)
     const calculatedHeight = ((screenWidth - 40) / width) * height;
-    setImageHeight(calculatedHeight);
+    if (imageHeight !== calculatedHeight) {
+      setImageHeight(calculatedHeight);
+    }
   });
   
   useFocusEffect(
