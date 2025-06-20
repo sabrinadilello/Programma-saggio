@@ -158,13 +158,13 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: '#FFFFFF',
   },
   scrollContentContainer: {
     paddingBottom: 120, // Aumentato per più spazio
   },
   imageContainer: {
-    backgroundColor: '#121212',
+    backgroundColor: '#FFFFFF',
   },
   headerContent: {
     alignItems: 'center',
@@ -173,7 +173,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   content: {
-    padding: 20,
+    paddingHorizontal: 0, 
+    paddingTop: 5,         
+    paddingBottom: 20, 
   },
   textSection: {
     marginBottom: 40,
