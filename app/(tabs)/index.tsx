@@ -70,7 +70,6 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <ScrollView 
         ref={scrollRef}
-        contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.scrollContentContainer}
         scrollEnabled={isAnimationComplete}
         removeClippedSubviews={false}
@@ -166,18 +165,16 @@ const styles = StyleSheet.create({
   imageContainer: {
     backgroundColor: '#FFFFFF',
   },
-  headerContent: {
-    alignItems: 'center',
-  },
   logoImage: {
     width: '100%',
   },
   content: {
     paddingHorizontal: 0, 
     paddingTop: 5,         
-    paddingBottom: 20, 
+    paddingBottom: 5, 
   },
   textSection: {
+    marginTop: 12,
     marginBottom: 40,
   },
   introText: {
