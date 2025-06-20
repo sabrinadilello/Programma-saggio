@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     paddingBottom: 120, // Aumentato per più spazio
   },
   imageContainer: {
-    paddingTop: 10,
+    paddingTop: 0,
     paddingBottom: 0,
   },
   headerContent: {
