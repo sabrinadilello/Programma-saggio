@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 
@@ -13,6 +13,19 @@ export default function HomeScreen() {
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   
+  const [logoHeight, setLogoHeight] = useState<number | undefined>(undefined);
+  useEffect(() => {
+    // Risolviamo l'asset locale per ottenere l'URI
+    const assetSource = Image.resolveAssetSource(LogoImage);
+    if (assetSource?.uri) {
+      Image.getSize(assetSource.uri, (width, height) => {
+        // Calcoliamo l'altezza basata sulla larghezza dello schermo meno il padding orizzontale (20+20=40)
+        const padding = 40;
+        const calculatedHeight = ((screenWidth - padding) / width) * height;
+        setLogoHeight(calculatedHeight);
+      });
+    }
+  }, []); 
   
   useFocusEffect(
     useCallback(() => {
@@ -156,7 +169,6 @@ const styles = StyleSheet.create({
   },
   logoImage: {
     width: '100%',
-    height: 80,    // Aggiunto piccolo margine sopra
     marginBottom: 7, // Spazio tra logo e testo
   },
   textSection: {
