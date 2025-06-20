@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image
 import { useFocusEffect } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 
-// --- MODIFICA 1: Importa TUTTE le immagini come moduli ---
-import LogoImage from '../../assets/images/logo.jpeg';
+
+
 import LeftCurtainImage from '../../assets/images/curtain-left.png';
 import RightCurtainImage from '../../assets/images/curtain-right.png';
 
@@ -15,13 +15,6 @@ export default function HomeScreen() {
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   
-  // --- MODIFICA 2: Calcolo altezza dinamica (metodo corretto) ---
-  const [logoHeight, setLogoHeight] = useState(300); // Valore di fallback
-
-  Image.getSize(LogoImage, (width, height) => {
-    const calculatedHeight = (screenWidth / width) * height;
-    setLogoHeight(calculatedHeight);
-  });
   
   useFocusEffect(
     useCallback(() => {
@@ -74,14 +67,7 @@ export default function HomeScreen() {
         scrollEnabled={isAnimationComplete}
         removeClippedSubviews={false}
       >
-
-      <Image
-        source={LogoImage}
-        style={[styles.logoImage, { height: logoHeight }]}
-        resizeMode="contain"
-      />
     
-
         <View style={styles.content}>
           <View style={styles.textSection}>
             <Text style={styles.introText}>
@@ -157,20 +143,15 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F8F8F8',
   },
   scrollContentContainer: {
+    paddingTop: 60, 
     paddingBottom: 120, // Aumentato per più spazio
   },
-  
-  logoImage: {
-    width: '100%',
-  },
   content: {
-    paddingHorizontal: 0, 
-    paddingTop: 5,         
-    paddingBottom: 5, 
-  },
+    padding: 20,
+    },
   textSection: {
     marginBottom: 40,
   },
