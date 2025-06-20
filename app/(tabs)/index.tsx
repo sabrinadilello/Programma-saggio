@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -67,20 +67,21 @@ export default function HomeScreen() {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView 
         ref={scrollRef}
+        contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.scrollContentContainer}
         scrollEnabled={isAnimationComplete}
         removeClippedSubviews={false}
       >
-        <View style={styles.imageContainer}>
-  <Image
-    source={LogoImage}
-    style={[styles.logoImage, { height: logoHeight }]}
-    resizeMode="contain"
-  />
-</View>
+    <View style={styles.imageContainer}>
+      <Image
+        source={LogoImage}
+        style={[styles.logoImage, { height: logoHeight }]}
+        resizeMode="contain"
+      />
+    </View>
 
         <View style={styles.content}>
           <View style={styles.textSection}>
@@ -149,7 +150,7 @@ export default function HomeScreen() {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -157,14 +158,13 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#121212',
   },
   scrollContentContainer: {
     paddingBottom: 120, // Aumentato per più spazio
   },
   imageContainer: {
-    paddingTop: 0,
-    paddingBottom: 0,
+    backgroundColor: '#121212',
   },
   headerContent: {
     alignItems: 'center',
