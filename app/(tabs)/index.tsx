@@ -1,10 +1,9 @@
 import React, { useRef, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router';
-import { LinearGradient } from 'expo-linear-gradient';
 
-
-
+// --- MODIFICA 1: Re-importata l'immagine del logo ---
+import LogoImage from '../../assets/images/logo.jpeg'; 
 import LeftCurtainImage from '../../assets/images/curtain-left.png';
 import RightCurtainImage from '../../assets/images/curtain-right.png';
 
@@ -14,7 +13,15 @@ export default function HomeScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
-  
+  // --- MODIFICA 2: Ripristinato lo stato e il calcolo per l'altezza dinamica del logo ---
+  const [logoHeight, setLogoHeight] = useState(300); // Valore di fallback
+
+  Image.getSize(String(LogoImage), (width, height) => {
+    // Calcola l'altezza dell'immagine per adattarla alla larghezza dello schermo meno il padding
+    const imageWidth = screenWidth - 40; // 20 di padding a sinistra e 20 a destra
+    const calculatedHeight = (imageWidth / width) * height;
+    setLogoHeight(calculatedHeight);
+  });
   
   useFocusEffect(
     useCallback(() => {
@@ -69,6 +76,13 @@ export default function HomeScreen() {
       >
     
         <View style={styles.content}>
+          {/* --- MODIFICA 3: Aggiunto il componente Image per il logo --- */}
+          <Image
+            source={LogoImage}
+            style={[styles.logoImage, { height: logoHeight }]}
+            resizeMode="contain"
+          />
+
           <View style={styles.textSection}>
             <Text style={styles.introText}>
               Ci sono momenti che si attendono a lungo.{'\n\n'}
@@ -108,7 +122,6 @@ export default function HomeScreen() {
       {!isAnimationComplete && (
         <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
           <Animated.Image 
-            // --- MODIFICA 3: Usa le variabili importate ---
             source={LeftCurtainImage}
             style={[
               styles.curtain,
@@ -121,7 +134,6 @@ export default function HomeScreen() {
             resizeMode="cover"
           /> 
           <Animated.Image
-            // --- MODIFICA 3: Usa le variabili importate ---
             source={RightCurtainImage} 
             style={[
               styles.curtain,
@@ -147,11 +159,16 @@ const styles = StyleSheet.create({
   },
   scrollContentContainer: {
     paddingTop: 20, 
-    paddingBottom: 120, // Aumentato per più spazio
+    paddingBottom: 120,
   },
   content: {
-    padding: 20,
-    },
+    paddingHorizontal: 20,
+  },
+  // --- MODIFICA 4: Aggiunto lo stile per il logo ---
+  logoImage: {
+    width: '100%',
+    marginBottom: 40, // Spazio tra il logo e il testo successivo
+  },
   textSection: {
     marginBottom: 40,
   },
