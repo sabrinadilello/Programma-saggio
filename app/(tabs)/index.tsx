@@ -163,8 +163,8 @@ const styles = StyleSheet.create({
     paddingBottom: 120, // Aumentato per più spazio
   },
   imageContainer: {
-    paddingTop: 40,
-    paddingBottom: 5,
+    paddingTop: 10,
+    paddingBottom: 0,
   },
   headerContent: {
     alignItems: 'center',
