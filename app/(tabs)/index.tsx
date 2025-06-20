@@ -26,6 +26,7 @@ export default function HomeScreen() {
   useFocusEffect(
     useCallback(() => {
       // Resetta l'animazione ogni volta che la schermata viene visualizzata
+      
       curtainAnimation.setValue(0);
       setIsAnimationComplete(false);
       
@@ -73,16 +74,13 @@ export default function HomeScreen() {
         contentContainerStyle={styles.scrollContentContainer}
         scrollEnabled={isAnimationComplete}
       >
-        <LinearGradient
-          colors={['#121212', '#121212']}
-          style={styles.header}>
-          <Image
-            // --- MODIFICA 3: Usa le variabili importate ---
-            source={LogoImage}
-            style={[styles.logoImage, { height: logoHeight }]}
-            resizeMode="contain"
-          />
-        </LinearGradient>
+        <View style={styles.imageContainer}>
+  <Image
+    source={LogoImage}
+    style={[styles.logoImage, { height: logoHeight }]}
+    resizeMode="contain"
+  />
+</View>
 
         <View style={styles.content}>
           <View style={styles.textSection}>
@@ -164,7 +162,7 @@ const styles = StyleSheet.create({
   scrollContentContainer: {
     paddingBottom: 120, // Aumentato per più spazio
   },
-  header: {
+  imageContainer: {
     paddingTop: 40,
     paddingBottom: 5,
   },

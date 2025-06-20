@@ -92,7 +92,7 @@ export default function TabsLayout() {
 const styles = StyleSheet.create({
   tabBarContainer: {
     flexDirection: 'row',
-    height: 90, // Manteniamo l'altezza che volevi
+    height: 80, // Manteniamo l'altezza che volevi
     paddingBottom: 20, // Spazio per la barra home di iPhone
     paddingTop: 10,
     borderTopLeftRadius: 20, // Aggiungiamo un tocco di stile con bordi arrotondati
