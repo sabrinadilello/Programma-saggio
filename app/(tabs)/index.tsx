@@ -74,13 +74,13 @@ export default function HomeScreen() {
         scrollEnabled={isAnimationComplete}
         removeClippedSubviews={false}
       >
-    <View style={styles.imageContainer}>
+
       <Image
         source={LogoImage}
         style={[styles.logoImage, { height: logoHeight }]}
         resizeMode="contain"
       />
-    </View>
+    
 
         <View style={styles.content}>
           <View style={styles.textSection}>
@@ -162,9 +162,7 @@ const styles = StyleSheet.create({
   scrollContentContainer: {
     paddingBottom: 120, // Aumentato per più spazio
   },
-  imageContainer: {
-    backgroundColor: '#FFFFFF',
-  },
+  
   logoImage: {
     width: '100%',
   },
@@ -174,7 +172,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5, 
   },
   textSection: {
-    marginBottom: 0,
+    marginBottom: 40,
   },
   introText: {
     fontSize: 16,
