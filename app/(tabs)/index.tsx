@@ -148,21 +148,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F8',
   },
   scrollContentContainer: {
-    paddingTop: 0, 
-    paddingBottom: 0,
+    paddingBottom: 120,
   },
   content: {
-    paddingHorizontal: 0,
+    paddingHorizontal: 20,
   },
   logoImage: {
     width: '100%',
-    aspectRatio: 2.5,
-    marginBottom: 0, // Spazio tra il logo e il testo successivo
-    marginTop: 0, 
-    paddingHorizontal: 0,
+    aspectRatio: 2.5, // <--- VALORE DA CAMBIARE!
+    marginTop: 20, // Aggiunto piccolo margine sopra
+    marginBottom: 40, // Spazio tra logo e testo
   },
   textSection: {
-    marginBottom: 120,
+    marginBottom: 40,
     paddingHorizontal: 20,  // Aggiungi padding orizzontale solo al testo
     paddingTop: 20,  
   },
