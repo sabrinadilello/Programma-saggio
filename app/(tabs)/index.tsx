@@ -155,9 +155,9 @@ const styles = StyleSheet.create({
   },
   logoImage: {
     width: '100%',
-    aspectRatio: 2.5, // <--- VALORE DA CAMBIARE!
-    marginTop: 20, // Aggiunto piccolo margine sopra
-    marginBottom: 40, // Spazio tra logo e testo
+    aspectRatio: 2, // <--- VALORE DA CAMBIARE!
+    marginTop: 0, // Aggiunto piccolo margine sopra
+    marginBottom: 0, // Spazio tra logo e testo
   },
   textSection: {
     marginBottom: 40,
