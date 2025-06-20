@@ -36,7 +36,6 @@ const programData: Omit<ProgramSectionData, 'image'>[] = [
     subtitle: 'Alice nel Paese delle Meraviglie',
     description: "Un primo atto ispirato all’universo visionario di Alice nel Paese delle Meraviglie, tra simbolismi, follia e trasformazioni. In un mondo capovolto dove il tempo si perde, le identità si confondono e ogni incontro lascia un segno, la danza diventa il linguaggio per attraversare sogni, paure e meraviglie.",
     choreographies: [
-      // ... coreografie del primo tempo ...
       { title: "ALICE – BALLETTO IN UN ATTO", courses: "Corsi: Gioco danza, Propedeutico, Accademico 1, 2 e 3", choreographer: "Coreografia: Matteo D’Alessio e Danila Valentini", description: "Alice, una bambina sognatrice e ribelle, è con la sorella in un giardino soleggiato, colmo di fiori e colori. Mentre la sorella legge un libro, Alice si distrae e si lascia trasportare dai pensieri: in lei nasce il desiderio di un mondo fatto solo di meraviglie, dove tutto è possibile. D’improvviso, un Coniglio Bianco vestito elegantemente le corre davanti, “È tardi, è tardi!” esclama agitato. Incuriosita, Alice lo segue e cade in una lunga tana, precipitando in un mondo assurdo e meraviglioso. Bevande misteriose e dolcetti la fanno rimpicciolire e ingrandire a dismisura.\n\nConfusa e sconvolta, Alice piange, e dalle sue lacrime nasce un vero e proprio mare. Nel mare di lacrime, Alice nuota insieme a strani animali: un topo filosofo, un pappagallo saputello, una lucertola nervosa e un giovane aquilotto. Una volta raggiunta la riva, decidono che il modo migliore per asciugarsi è… una maratona senza senso, in cui tutti corrono in tondo senza mai fermarsi.\n\nNel suo viaggio, Alice incontra creature stravaganti e ambienti sempre più bizzarri: Pinco Panco e Panco Pinco, due gemelli che parlano in rima, si contraddicono e raccontano storie senza capo né coda, lasciando Alice ancora più confusa, un bruco filosofico, un giardino in cui i fiori parlano e cantano, ma escludono Alice perché non è uno di loro. Poi, uno strano Gatto dal sorriso inquietante: lo Stregatto, che le appare e scompare indicando mille direzioni… senza darne nessuna. Al centro di questo mondo eccentrico c’è il tè senza fine del Cappellaio Matto e del Leprotto Marzolino, un banchetto surreale dove il tempo sembra essersi fermato. Ma le stranezze non sono finite.\n\nAlice si ritrova nella reggia della Regina di Cuori, una sovrana bizzarra e collerica che comanda un esercito di carte da gioco. Le carte, trasformate in soldati e guardiani, marciano e sorvegliano il giardino come se fosse un campo di battaglia. Alice, disorientata, non capisce dove sia finita e, per non dare nell’occhio, prova a mimetizzarsi tra le carte. La Regina però la scorge subito e, con un sorriso tanto curioso quanto inquietante, la invita a giocare a croquet. Ma non è un croquet qualunque: le mazze sono fenicotteri vivi, le palline sono ricci e il campo è un groviglio caotico di comandi e urla. Nonostante tutto, Alice riesce a vincere la partita, e la Regina, furiosa, urla il suo celebre verdetto: “Tagliatele la testa!” Per far le cose con ordine, viene indetto un processo. Al banco dei testimoni sfilano uno dopo l’altro tutti i personaggi che Alice ha incontrato nel suo viaggio: ciascuno porta strane accuse, racconti sconclusionati e versioni diverse dei fatti. Il tribunale è una farsa, ma la Regina è implacabile. “Tagliatele la testa!” grida di nuovo, al culmine della sua furia.\n\nAlice allora fugge. Corre via mentre le carte-soldato la inseguono, tutto le gira intorno, i volti, le voci, le risate… fino a quando, all’improvviso, si risveglia. È di nuovo nel giardino, accanto alla sorella, come se nulla fosse accaduto. Forse era solo un sogno. O forse no." },
       { title: "PURE IMAGINATION – TIMOTHÉE CHALAMET", courses: "Coro delle allievedel corso canto: Silvia Dotale, Iris Iannotta, Sophie D. Perrella, Talita Pizzurno", choreographer: "", description: "Un intermezzo vocale che accompagna lo spettatore in un mondo dove l’imagination è l’unico confine." },
       { title: "ALICE’S THEME – DANNY ELFMAN", courses: "Corso: Contemporaneo 2", choreographer: "Coreografia: Matteo D’Alessio", description: "Danza il sogno di Alice: un percorso tra meraviglia, smarrimento e trasformazione." },
@@ -46,9 +45,8 @@ const programData: Omit<ProgramSectionData, 'image'>[] = [
   {
     title: '🎬 SECONDO TEMPO',
     subtitle: 'Chicago',
-    description: "Tra paillettes, jazz e crimini a ritmo di danza...",
+    description: "Tra paillettes, jazz e crimini a ritmo di danza, il secondo tempo è un viaggio nell’anima ribelle del musical più iconico di Broadway. Uno spettacolo carico di grinta, ironia e glamour.",
     choreographies: [
-      // ... coreografie del secondo tempo ...
       { title: 'IERI COME OGGI: CALYPSO – ANALOG SOL', courses: "Corso: contemporaneo 3", choreographer: "Coreografia: Matteo D’Alessio", description: "La città corre: tra folla, silenzi e relazioni che si sfiorano senza toccarsi." },
       { title: 'SWEET HOME CHICAGO – THE BLUES BORTHERS', courses: "Corso: hip hop 2", choreographer: "Coreografia: Andrea Sgarra", description: "" },
       { title: 'SELF LOVE – INTERPRETI VARI', courses: "Corso: Hip Hop 3", choreographer: "Coreografia: Andrea Sgarra", description: "" },
@@ -157,9 +155,11 @@ export default function ProgramScreen() {
           </View>
           <View style={styles.thanksCard}>
             <Text style={styles.thanksText}>
-                Un grazie sentito a tutte le allieve e gli allievi...{'\n\n'}
-                Un grazie alle famiglie...{'\n\n'}
-                E infine grazie a voi, pubblico...{'\n'}
+                Un grazie sentito a tutte le allieve e gli allievi, che ogni anno ci ricordano quanto sia potente la passione.{'\n\n'}
+                Un grazie alle famiglie, che sostengono questo percorso
+                con fiducia e affetto.{'\n\n'}
+                Grazie a chi ha collaborato dietro le quinte, chi ha cucito un costume, montato una luce, offerto un sorriso.{'\n\n'}
+                E infine grazie a voi, pubblico, perché ogni applauso accende qualcosa dentro.{'\n'}
             </Text>
           </View>
         </View>
@@ -168,7 +168,7 @@ export default function ProgramScreen() {
   );
 }
 
-// ... GLI STILI RIMANGONO IDENTICI A QUELLI CHE AVEVI GIÀ...
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F8F8F8' },
   scrollContentContainer: { paddingBottom: 90 },
