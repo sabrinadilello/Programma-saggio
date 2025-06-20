@@ -63,6 +63,7 @@ export default function ContactsScreen() {
             source={StaffImage}
             // Applichiamo lo stile con l'altezza calcolata dinamicamente
             style={[styles.mainImage, { height: imageHeight }]}
+            resizeMode="contain"
           />
         </View>
 
