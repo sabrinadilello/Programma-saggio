@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image, SafeAreaView } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -67,12 +67,12 @@ export default function HomeScreen() {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView 
         ref={scrollRef}
-        style={styles.container}
         contentContainerStyle={styles.scrollContentContainer}
         scrollEnabled={isAnimationComplete}
+        removeClippedSubviews={false}
       >
         <View style={styles.imageContainer}>
   <Image
@@ -149,7 +149,7 @@ export default function HomeScreen() {
           />
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 
