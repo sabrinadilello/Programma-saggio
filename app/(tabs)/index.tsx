@@ -12,12 +12,7 @@ export default function HomeScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
-  const [logoHeight, setLogoHeight] = useState(300); 
-
-  Image.getSize(LogoImage, (width, height) => {
-    const calculatedHeight = (screenWidth / width) * height;
-    setLogoHeight(calculatedHeight);
-  });
+  
   
   useFocusEffect(
     useCallback(() => {
@@ -74,7 +69,7 @@ export default function HomeScreen() {
         <View style={styles.content}>
           <Image
             source={LogoImage}
-            style={[styles.logoImage, { height: logoHeight }]}
+            style={styles.logoImage}
             resizeMode="contain"
           />
 
@@ -161,6 +156,7 @@ const styles = StyleSheet.create({
   },
   logoImage: {
     width: '100%',
+    aspectRatio: 2.5,
     marginBottom: 0, // Spazio tra il logo e il testo successivo
     marginTop: 0, 
     paddingHorizontal: 0,
