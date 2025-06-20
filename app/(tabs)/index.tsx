@@ -174,8 +174,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5, 
   },
   textSection: {
-    marginTop: 12,
-    marginBottom: 40,
+    marginBottom: 0,
   },
   introText: {
     fontSize: 16,
