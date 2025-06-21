@@ -78,15 +78,9 @@ export default function HomeScreen() {
             // --- MODIFICA 3: Usa la variabile importata ---
             source={LogoImageSource}
             style={[styles.logoImage, { height: LogoHeight }]}
-          />
-        </View>
-
-      
-          <Image
-            source={LogoImageSource}
-            style={styles.logoImage}
             resizeMode="contain"
           />
+        </View>
 
           <View style={styles.textSection}>
             <Text style={styles.introText}>
