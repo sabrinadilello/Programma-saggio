@@ -2,27 +2,31 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 
-import LogoImageSource from '../../assets/images/logo.jpeg'; 
+import LogoImage from '../../assets/images/logo.jpeg'; 
 import LeftCurtainImage from '../../assets/images/curtain-left.png';
 import RightCurtainImage from '../../assets/images/curtain-right.png';
 
 const { width: screenWidth } = Dimensions.get('window');
-const padding = 40;
+
 
 export default function HomeScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false); 
-  const [LogoHeight, setLogoHeight] = useState(300);
+  const [LogoHeight, setLogoHeight] = useState<number | undefined>(undefined);
 
-  Image.getSize(LogoImageSource, (width, height) => {
-    const calculatedHeight = ((screenWidth - padding) / width) * height;
+  useEffect(() => {
+    // Il padding orizzontale che applichiamo al nostro contenitore principale
+    const horizontalPadding = 0; 
+
+  Image.getSize(LogoImage, (width, height) => {
+    const calculatedHeight = ((screenWidth - horizontalPadding) / width) * height;
     setLogoHeight(calculatedHeight);
   });
+}, []);
 
   useFocusEffect(
     useCallback(() => {
-      // Resetta l'animazione ogni volta che la schermata viene visualizzata
       
       curtainAnimation.setValue(0);
       setIsAnimationComplete(false);
@@ -73,13 +77,13 @@ export default function HomeScreen() {
       >
     
         <View style={styles.content}>
-        <View style={[styles.imageContainer, { marginBottom: 0 }]}>
-          <Image
+        {LogoHeight && (
+            <Image
             // --- MODIFICA 3: Usa la variabile importata ---
-            source={LogoImageSource}
+            source={LogoImage}
             style={[styles.logoImage, { height: LogoHeight }]}
-            resizeMode="contain"
           />
+        )} 
         </View>
 
           <View style={styles.textSection}>
@@ -113,9 +117,9 @@ export default function HomeScreen() {
           <View style={styles.signatureSection}>
             <Text style={styles.signatureName}>Matteo D'Alessio</Text>
             <Text style={styles.signatureTitle}>Direzione Artistica – Centro Studi Arti Sceniche</Text>
-          </View>
-        </View>
-      </ScrollView>
+            </View>
+        </ScrollView>
+
 
       {/* Il sipario animato */}
       {!isAnimationComplete && (
@@ -144,11 +148,11 @@ export default function HomeScreen() {
             ]}
             resizeMode="cover"
           />
-        </View>
-      )}
-    </View>
-  );
-}
+          </View>
+        )}
+      </View>
+    );
+  }
 
 // Gli stili rimangono gli stessi
 const styles = StyleSheet.create({
@@ -160,13 +164,14 @@ const styles = StyleSheet.create({
     paddingBottom: 120,
   },
   content: {
-   padding: 20, 
-  },
-  imageContainer: {
-    borderRadius: 12, 
+    paddingHorizontal: 0, // Padding laterale di 20px
+    paddingTop: 5, // Poco spazio sopra l'immagine, sotto la status bar
   },
   logoImage: {
-    width: '100%',
+    width: '100%', // Occupa tutta la larghezza disponibile (meno il padding)
+    borderRadius: 12, // Manteniamo gli angoli arrotondati
+    marginBottom: 5, // Spazio tra immagine e testo
+    // NON serve resizeMode perché altezza e larghezza hanno già le proporzioni corrette
   },
   textSection: {
     marginBottom: 40, 
