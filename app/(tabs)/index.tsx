@@ -2,35 +2,20 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 
-import LogoImage from '../../assets/images/logo.jpeg'; 
+import LogoImage from '../../assets/images/logo.jpeg';
 import LeftCurtainImage from '../../assets/images/curtain-left.png';
 import RightCurtainImage from '../../assets/images/curtain-right.png';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-
 export default function HomeScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false); 
-  const [logoHeight, setLogoHeight] = useState<number | undefined>(undefined);
 
-  useEffect(() => {
-    // Il padding orizzontale che applichiamo al nostro contenitore principale
-    if (screenWidth > 0) {
-    const horizontalPadding = 0; 
-
-  Image.getSize(LogoImage, (width, height) => {
-    const calculatedHeight = ((screenWidth - horizontalPadding) / width) * height;
-    setLogoHeight(calculatedHeight);
-  });
-} else {
-}
-}, []);
 
   useFocusEffect(
     useCallback(() => {
-      
       curtainAnimation.setValue(0);
       setIsAnimationComplete(false);
       
@@ -41,12 +26,8 @@ export default function HomeScreen() {
         easing: Easing.inOut(Easing.quad),
         useNativeDriver: false,
       });
+      animation.start(() => setIsAnimationComplete(true));
 
-      animation.start(() => {
-        setIsAnimationComplete(true);
-      });
-
-      // Funzione di pulizia per fermare l'animazione se si cambia schermata
       return () => {
         animation.stop(); 
         curtainAnimation.setValue(0);
@@ -55,20 +36,9 @@ export default function HomeScreen() {
     }, [])
   );
 
-  const leftCurtainTranslateX = curtainAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, -screenWidth / 2],
-  });
-
-  const rightCurtainTranslateX = curtainAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, screenWidth / 2],
-  });
-
-  const curtainOpacity = curtainAnimation.interpolate({
-    inputRange: [0, 0.7, 1],
-    outputRange: [1, 1, 0],
-  });
+  const leftCurtainTranslateX = curtainAnimation.interpolate({ inputRange: [0, 1], outputRange: [0, -screenWidth / 2] });
+  const rightCurtainTranslateX = curtainAnimation.interpolate({ inputRange: [0, 1], outputRange: [0, screenWidth / 2] });
+  const curtainOpacity = curtainAnimation.interpolate({ inputRange: [0, 0.7, 1], outputRange: [1, 1, 0] });
 
   return (
     <View style={styles.container}>
@@ -78,18 +48,13 @@ export default function HomeScreen() {
         scrollEnabled={isAnimationComplete}
         removeClippedSubviews={false}
       >
-    
-        <View style={styles.content}>
-        {logoHeight && (
-            <Image
-            // --- MODIFICA 3: Usa la variabile importata ---
-            source={LogoImage}
-            style={[styles.logoImage, { height: logoHeight }]}
-            />
-          )} 
-
-        </View>
-
+        {/* CORREZIONE 2 (CRITICA): Tutto il contenuto ora è DENTRO questo View */}
+      <View style={styles.content}>
+          <View style={styles.logoContainer}>
+            <Image source={LogoImage} style={styles.logo} resizeMode="contain" />
+          </View> 
+         
+          
           <View style={styles.textSection}>
             <Text style={styles.introText}>
               Ci sono momenti che si attendono a lungo.{'\n\n'}
@@ -122,35 +87,21 @@ export default function HomeScreen() {
             <Text style={styles.signatureName}>Matteo D'Alessio</Text>
             <Text style={styles.signatureTitle}>Direzione Artistica – Centro Studi Arti Sceniche</Text>
           </View>
-        {/* La View content si chiude qui */}
+        </View> 
+        {/* CORREZIONE 3: Il tag </View> di troppo è stato rimosso da qui */}
       </ScrollView>
-
 
       {/* Il sipario animato */}
       {!isAnimationComplete && (
         <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
           <Animated.Image 
             source={LeftCurtainImage}
-            style={[
-              styles.curtain,
-              styles.leftCurtain,
-              { 
-                transform: [{ translateX: leftCurtainTranslateX }],
-                opacity: curtainOpacity
-              }
-            ]}
+            style={[styles.curtain, styles.leftCurtain, { transform: [{ translateX: leftCurtainTranslateX }], opacity: curtainOpacity }]}
             resizeMode="cover"
           /> 
           <Animated.Image
             source={RightCurtainImage} 
-            style={[
-              styles.curtain,
-              styles.rightCurtain,
-              { 
-                transform: [{ translateX: rightCurtainTranslateX }],
-                opacity: curtainOpacity
-              }
-            ]}
+            style={[styles.curtain, styles.rightCurtain, { transform: [{ translateX: rightCurtainTranslateX }], opacity: curtainOpacity }]}
             resizeMode="cover"
           />
         </View>
@@ -159,7 +110,6 @@ export default function HomeScreen() {
   );
 }
 
-// Gli stili rimangono gli stessi
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -169,18 +119,22 @@ const styles = StyleSheet.create({
     paddingBottom: 120,
   },
   content: {
-    paddingHorizontal: 0, // Padding laterale di 20px
-    paddingTop: 5, // Poco spazio sopra l'immagine, sotto la status bar
+    paddingHorizontal: 0, 
+    paddingTop: 5,
   },
-  logoImage: {
-    width: '100%', // Occupa tutta la larghezza disponibile (meno il padding)
-    borderRadius: 12, // Manteniamo gli angoli arrotondati
-    marginBottom: 15, // Spazio tra immagine e testo
-    // NON serve resizeMode perché altezza e larghezza hanno già le proporzioni corrette
+  logoContainer: {
+    width: '100%',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  logo: {
+    width: '100%',
+  height: undefined,
+  aspectRatio: 1, 
   },
   textSection: {
     marginBottom: 40, 
-    paddingHorizontal: 20,
+    paddingHorizontal: 20, // Aggiungiamo padding solo qui per non staccare il testo dai bordi
   },
   introText: {
     fontSize: 16,
@@ -191,6 +145,7 @@ const styles = StyleSheet.create({
   },
   dedicationSection: {
     marginBottom: 40,
+    paddingHorizontal: 20,
   },
   dedicationTitle: {
     fontSize: 24,
@@ -221,6 +176,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     borderTopWidth: 2,
     borderTopColor: '#E0E0E0',
+    marginHorizontal: 20,
   },
   signatureName: {
     fontSize: 20,
