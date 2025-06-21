@@ -2,17 +2,24 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 
-import LogoImage from '../../assets/images/logo.jpeg'; 
+import LogoImageSource from '../../assets/images/logo.jpeg'; 
 import LeftCurtainImage from '../../assets/images/curtain-left.png';
 import RightCurtainImage from '../../assets/images/curtain-right.png';
 
 const { width: screenWidth } = Dimensions.get('window');
+const padding = 40;
 
 export default function HomeScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false); 
-  
+  const [LogoHeight, setLogoHeight] = useState(300);
+
+  Image.getSize(LogoImageSource, (width, height) => {
+    const calculatedHeight = ((screenWidth - padding) / width) * height;
+    setLogoHeight(calculatedHeight);
+  });
+
   useFocusEffect(
     useCallback(() => {
       // Resetta l'animazione ogni volta che la schermata viene visualizzata
@@ -66,8 +73,17 @@ export default function HomeScreen() {
       >
     
         <View style={styles.content}>
+        <View style={[styles.imageContainer, { marginBottom: 40 }]}>
           <Image
-            source={LogoImage}
+            // --- MODIFICA 3: Usa la variabile importata ---
+            source={LogoImageSource}
+            style={[styles.logoImage, { height: LogoHeight }]}
+          />
+        </View>
+
+      
+          <Image
+            source={LogoImageSource}
             style={styles.logoImage}
             resizeMode="contain"
           />
@@ -146,18 +162,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8F8F8',
   },
-  scrollContentContainer: {
-    paddingTop: 5, 
+  scrollContentContainer: { 
     paddingBottom: 120,
-    paddingHorizontal: 0,
   },
   content: {
-    
+   padding: 20, 
+  },
+  imageContainer: {
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+    overflow: 'hidden', 
   },
   logoImage: {
     width: '100%',
-    aspectRatio: 1.3,
-    marginBottom: 7, // Spazio tra logo e testo
   },
   textSection: {
     marginBottom: 40, 
