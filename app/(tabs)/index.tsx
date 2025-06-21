@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     width: '100%',
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 5,
+    marginBottom: 5,
   },
   logo: {
     width: '100%',
