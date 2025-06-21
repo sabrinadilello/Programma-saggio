@@ -13,16 +13,19 @@ export default function HomeScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false); 
-  const [LogoHeight, setLogoHeight] = useState<number | undefined>(undefined);
+  const [logoHeight, setLogoHeight] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     // Il padding orizzontale che applichiamo al nostro contenitore principale
+    if (screenWidth > 0) {
     const horizontalPadding = 0; 
 
   Image.getSize(LogoImage, (width, height) => {
     const calculatedHeight = ((screenWidth - horizontalPadding) / width) * height;
     setLogoHeight(calculatedHeight);
   });
+} else {
+}
 }, []);
 
   useFocusEffect(
@@ -69,7 +72,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView 
+      <ScrollView
         ref={scrollRef}
         contentContainerStyle={styles.scrollContentContainer}
         scrollEnabled={isAnimationComplete}
@@ -77,13 +80,14 @@ export default function HomeScreen() {
       >
     
         <View style={styles.content}>
-        {LogoHeight && (
+        {logoHeight && (
             <Image
             // --- MODIFICA 3: Usa la variabile importata ---
             source={LogoImage}
-            style={[styles.logoImage, { height: LogoHeight }]}
-          />
-        )} 
+            style={[styles.logoImage, { height: logoHeight }]}
+            />
+          )} 
+
         </View>
 
           <View style={styles.textSection}>
@@ -117,8 +121,9 @@ export default function HomeScreen() {
           <View style={styles.signatureSection}>
             <Text style={styles.signatureName}>Matteo D'Alessio</Text>
             <Text style={styles.signatureTitle}>Direzione Artistica – Centro Studi Arti Sceniche</Text>
-            </View>
-        </ScrollView>
+          </View>
+        {/* La View content si chiude qui */}
+      </ScrollView>
 
 
       {/* Il sipario animato */}
@@ -148,11 +153,11 @@ export default function HomeScreen() {
             ]}
             resizeMode="cover"
           />
-          </View>
-        )}
-      </View>
-    );
-  }
+        </View>
+      )}
+    </View>
+  );
+}
 
 // Gli stili rimangono gli stessi
 const styles = StyleSheet.create({
@@ -170,11 +175,12 @@ const styles = StyleSheet.create({
   logoImage: {
     width: '100%', // Occupa tutta la larghezza disponibile (meno il padding)
     borderRadius: 12, // Manteniamo gli angoli arrotondati
-    marginBottom: 5, // Spazio tra immagine e testo
+    marginBottom: 15, // Spazio tra immagine e testo
     // NON serve resizeMode perché altezza e larghezza hanno già le proporzioni corrette
   },
   textSection: {
     marginBottom: 40, 
+    paddingHorizontal: 20,
   },
   introText: {
     fontSize: 16,
