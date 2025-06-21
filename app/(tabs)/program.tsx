@@ -27,7 +27,7 @@ interface ProgramSectionData {
 }
 
 const screenWidth = Dimensions.get('window').width;
-const padding = 40;
+const padding = 20;
 
 const programData: Omit<ProgramSectionData, 'image'>[] = [
   // --- MODIFICA 2: Rimuoviamo le immagini dai dati statici, le aggiungeremo dinamicamente ---
@@ -48,8 +48,8 @@ const programData: Omit<ProgramSectionData, 'image'>[] = [
     description: "Tra paillettes, jazz e crimini a ritmo di danza, il secondo tempo è un viaggio nell’anima ribelle del musical più iconico di Broadway. Uno spettacolo carico di grinta, ironia e glamour.",
     choreographies: [
       { title: 'IERI COME OGGI: CALYPSO – ANALOG SOL', courses: "Corso: contemporaneo 3", choreographer: "Coreografia: Matteo D’Alessio", description: "La città corre: tra folla, silenzi e relazioni che si sfiorano senza toccarsi." },
-      { title: 'SWEET HOME CHICAGO – THE BLUES BORTHERS', courses: "Corso: hip hop 2", choreographer: "Coreografia: Andrea Sgarra", description: "" },
-      { title: 'SELF LOVE – INTERPRETI VARI', courses: "Corso: Hip Hop 3", choreographer: "Coreografia: Andrea Sgarra", description: "" },
+      { title: 'CHARLESTON – SAM LEVINE', courses: "Corso: propedeutico", choreographer: "Coreografia: Danila Valentini", description: "" },
+      { title: 'WELCOME TO CHICAGO – INTERPRETI VARI', courses: "Corsi: Hip Hop 2 e 3", choreographer: "Coreografia: Andrea Sgarra", description: "" },
       { title: 'CHICAGO – La città, lo scandalo, lo spettacolo', courses: "Corsi: propedeutico e moderno 1,2 e 3", choreographer: "Coreografia: Matteo D’Alessio e Danila Valentini e le assistenti Matilde Colombi e Maria Letizia Galati", description: "Nella Chicago degli anni ’20, il confine tra giustizia e spettacolo è solo una questione di luci. Velma Kelly, diva del vaudeville, apre la scena con All That Jazz, in un’esplosione di ritmo, fumo epaillettes. La città si sveglia… e con lei le sue bugie. Ma dietro quei riflettori si nasconde il sangue: Velma ha appena commesso un omicidio.\n\nAnche Roxie Hart ha una storia da raccontare. Il suo amante le ha promesso una carriera da star, come la sua paladina Velma. Ma quando le rivela che era solo una bugia per sedurla, Roxie, accecata dalla rabbia, gli spara. Presa dal panico, convince il marito, ingenuo e devoto, che si è trattato di legittima difesa contro uno stupratore, e lo spinge ad addossarsi la colpa. Ma la verità viene presto a galla. Tradito, il marito confessa tutto alla polizia. Roxie finisce in prigione.\n\nLì conosce Mama Morton, matrona autoritaria e pragmatica che comanda il carcere con una sola regola: chi sa come trattarla, avrà i suoi favori.\n\nIn prigione, Roxie incontra altre donne accusate di omicidio, tutte convinte di essere vittime di uomini meschini. Sei di loro raccontano la propria storia nel feroce e ironico Cell Block Tango.\n\nFuori dalle sbarre, c’è Billy Flynn: il più famoso e ambito avvocato della città. Narcisista, brillante, manipolatore, capace di trasformare ogni processo in un numero da palcoscenico.\n\nGià avvocato di Velma, Billy prende in carico anche il caso di Roxie e ne fa un fenomeno mediatico. La stampa viene manipolata come un’orchestra, i giornalisti come burattini. Roxie diventa un personaggio creato a tavolino, e la città si innamora della sua immagine. Roxie sogna gli applausi, i riflettori, il successo. Ma Velma non è pronta a cederle la scena. Oscurata dalla nuova diva, cerca di recuperare terreno e, alle strette, propone a Roxie di prendere il posto della sorella Veronica, la sua ex partner sul palco. Il processo si avvicina. Roxie è spaventata, ma Billy le promette che andrà tutto secondo copione.\n\nE così sarà: trionfa lo spettacolo sull’etica, la coreografia sul codice penale. Quando il sipario della giustizia cala, se ne apre un altro: quello del teatro. Roxie e Velma, ormai libere, salgono finalmente sul palco. Fiere, indipendenti, immortali È il loro manifesto: la vita è un palcoscenico, e loro non smetteranno mai di danzare." },
     ]
   }
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   sectionHeader: { marginBottom: 20 },
   sectionTitle: { fontSize: 24, fontFamily: 'Inter-Bold', color: '#c8151b', textAlign: 'center', marginBottom: 8 },
   sectionSubtitle: { fontSize: 20, fontFamily: 'Inter-SemiBold', color: '#1A1A1A', textAlign: 'center' },
-  imageContainer: { marginBottom: 20 },
+  imageContainer: { marginBottom: 7 },
   sectionImage: { width: '100%', borderRadius: 12 },
   descriptionCard: { backgroundColor: '#FFFFFF', padding: 20, borderRadius: 12, marginBottom: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 4, elevation: 3 },
   description: { fontSize: 16, fontFamily: 'Inter-Regular', color: '#333', lineHeight: 24, textAlign: 'center' },

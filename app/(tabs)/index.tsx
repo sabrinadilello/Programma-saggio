@@ -73,7 +73,7 @@ export default function HomeScreen() {
       >
     
         <View style={styles.content}>
-        <View style={[styles.imageContainer, { marginBottom: 40 }]}>
+        <View style={[styles.imageContainer, { marginBottom: 0 }]}>
           <Image
             // --- MODIFICA 3: Usa la variabile importata ---
             source={LogoImageSource}
