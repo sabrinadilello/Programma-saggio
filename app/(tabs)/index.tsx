@@ -11,21 +11,7 @@ const { width: screenWidth } = Dimensions.get('window');
 export default function HomeScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const curtainAnimation = useRef(new Animated.Value(0)).current;
-  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
-  
-  const [logoHeight, setLogoHeight] = useState<number | undefined>(undefined);
-  useEffect(() => {
-    // Risolviamo l'asset locale per ottenere l'URI
-    const assetSource = Image.resolveAssetSource(LogoImage);
-    if (assetSource?.uri) {
-      Image.getSize(assetSource.uri, (width, height) => {
-        // Calcoliamo l'altezza basata sulla larghezza dello schermo meno il padding orizzontale (20+20=40)
-        const padding = 40;
-        const calculatedHeight = ((screenWidth - padding) / width) * height;
-        setLogoHeight(calculatedHeight);
-      });
-    }
-  }, []); 
+  const [isAnimationComplete, setIsAnimationComplete] = useState(false); 
   
   useFocusEffect(
     useCallback(() => {
@@ -163,12 +149,14 @@ const styles = StyleSheet.create({
   scrollContentContainer: {
     paddingTop: 5, 
     paddingBottom: 120,
+    paddingHorizontal: 0,
   },
   content: {
-    paddingHorizontal: 0,
+    
   },
   logoImage: {
     width: '100%',
+    aspectRatio: 1.3,
     marginBottom: 7, // Spazio tra logo e testo
   },
   textSection: {
