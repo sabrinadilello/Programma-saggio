@@ -1,15 +1,9 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useFocusEffect } from 'expo-router';
-import { View, Text, StyleSheet, ScrollView, Image, Dimensions, ImageSourcePropType, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions, ImageSourcePropType, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Clock, Heart, ChevronDown, ChevronUp } from 'lucide-react-native';
 
-// --- MODIFICA 1: Importa TUTTE le immagini come moduli ---
-import AliceImage from '../../assets/images/alice.jpg';
-import ChicagoImage from '../../assets/images/chicago.jpg';
-
-
-// --- TIPI E DATI (MODIFICATI) ---
 
 interface Choreography {
   title: string;
@@ -21,7 +15,6 @@ interface Choreography {
 interface ProgramSectionData {
   title: string;
   subtitle: string;
-  image: ImageSourcePropType; // Il tipo rimane, ma il valore sarà la variabile importata
   description: string;
   choreographies: Choreography[];
 }
@@ -87,13 +80,7 @@ const ProgramSection = ({ section, imageHeight }: ProgramSectionProps) => (
       <Text style={styles.sectionTitle}>{section.title}</Text>
       <Text style={styles.sectionSubtitle}>{section.subtitle}</Text>
     </View>
-    <View style={styles.imageContainer}>
-      <Image
-        source={section.image}
-        style={[styles.sectionImage, { height: imageHeight }]}
-        resizeMode="contain"
-      />
-    </View>
+    
     <View style={styles.descriptionCard}>
       <Text style={styles.description}>{section.description}</Text>
     </View>
@@ -107,17 +94,6 @@ export default function ProgramScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const [renderKey, setRenderKey] = useState(0);
   
-  // --- MODIFICA 3: Calcolo dinamico delle altezze con useState e Image.getSize ---
-  const [imageHeights, setImageHeights] = useState({ alice: 400, chicago: 400 });
-
-  Image.getSize(AliceImage, (width, height) => {
-    const calculatedHeight = ((screenWidth - padding) / width) * height;
-    setImageHeights(prev => ({ ...prev, alice: calculatedHeight }));
-  });
-  Image.getSize(ChicagoImage, (width, height) => {
-    const calculatedHeight = ((screenWidth - padding) / width) * height;
-    setImageHeights(prev => ({ ...prev, chicago: calculatedHeight }));
-  });
 
   useFocusEffect(
     useCallback(() => {
@@ -125,11 +101,6 @@ export default function ProgramScreen() {
       setRenderKey(prevKey => prevKey + 1);
     }, [])
   );
-
-  const finalProgramData: ProgramSectionData[] = [
-    { ...programData[0], image: AliceImage },
-    { ...programData[1], image: ChicagoImage },
-  ];
 
   return (
     <ScrollView
@@ -144,9 +115,6 @@ export default function ProgramScreen() {
         </View>
       </LinearGradient>
 
-      <View style={styles.content} key={renderKey}>
-        <ProgramSection section={finalProgramData[0]} imageHeight={imageHeights.alice} />
-        <ProgramSection section={finalProgramData[1]} imageHeight={imageHeights.chicago} />
 
         <View style={styles.thanksSection}>
           <View style={styles.thanksHeader}>
@@ -163,7 +131,6 @@ export default function ProgramScreen() {
             </Text>
           </View>
         </View>
-      </View>
     </ScrollView>
   );
 }
@@ -171,30 +138,52 @@ export default function ProgramScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F8F8F8' },
+
   scrollContentContainer: { paddingBottom: 90 },
+
   header: { paddingTop: 60, paddingBottom: 40, paddingHorizontal: 20 },
+  
   headerContent: { alignItems: 'center' },
+  
   title: { fontSize: 28, fontFamily: 'Inter-Bold', color: '#FFFFFF', textAlign: 'center', marginTop: 16 },
+  
   content: { padding: 20 },
+  
   programSection: { marginBottom: 40 },
+  
   sectionHeader: { marginBottom: 20 },
+  
   sectionTitle: { fontSize: 24, fontFamily: 'Inter-Bold', color: '#c8151b', textAlign: 'center', marginBottom: 8 },
+  
   sectionSubtitle: { fontSize: 20, fontFamily: 'Inter-SemiBold', color: '#1A1A1A', textAlign: 'center' },
-  imageContainer: { marginBottom: 7 },
-  sectionImage: { width: '100%', borderRadius: 12 },
+
   descriptionCard: { backgroundColor: '#FFFFFF', padding: 20, borderRadius: 12, marginBottom: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 4, elevation: 3 },
+  
   description: { fontSize: 16, fontFamily: 'Inter-Regular', color: '#333', lineHeight: 24, textAlign: 'center' },
+  
   choreographyList: { gap: 12 },
+  
   choreographyItem: { backgroundColor: '#FFFFFF', padding: 16, borderRadius: 8, borderLeftWidth: 4, borderLeftColor: '#D4AF37', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 2, elevation: 2 },
+  
   choreographyHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  
   choreographyTitleContainer: { flex: 1, marginRight: 10 },
+  
   choreographyTitle: { fontSize: 16, fontFamily: 'Inter-SemiBold', color: '#1A1A1A', marginBottom: 4 },
+  
   choreographyDetails: { fontSize: 14, fontFamily: 'Inter-Regular', color: '#555555', lineHeight: 20 },
+  
   descriptionContainer: { marginTop: 12, paddingTop: 12, borderTopWidth: 1, borderTopColor: '#EEEEEE' },
+  
   choreographyDescription: { fontSize: 14, fontFamily: 'Inter-Regular', color: '#333333', lineHeight: 22 },
+  
   thanksSection: { marginTop: 20 },
+  
   thanksHeader: { alignItems: 'center', marginBottom: 20 },
+  
   thanksTitle: { fontSize: 22, fontFamily: 'Inter-Bold', color: '#c8151b', textAlign: 'center', marginTop: 12 },
+  
   thanksCard: { backgroundColor: '#FFFFFF', padding: 24, borderRadius: 12, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 4, elevation: 3, borderWidth: 2, borderColor: '#D4AF37' },
+  
   thanksText: { fontSize: 16, fontFamily: 'Inter-Regular', color: '#333', lineHeight: 24, textAlign: 'center' },
 });
