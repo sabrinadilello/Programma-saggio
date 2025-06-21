@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useFocusEffect } from 'expo-router';
-import { View, Text, StyleSheet, ScrollView, Image, Dimensions, TouchableOpacity, Linking, Platform } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity, Linking, Platform, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Info as InfoIcon, MapPin, ExternalLink } from 'lucide-react-native';
 
-// --- MODIFICA 1: Importa l'immagine come un modulo ---
 import LocandinaImageSource from '../../assets/images/locandina.jpg';
 
 const screenWidth = Dimensions.get('window').width;
@@ -12,15 +11,12 @@ const padding = 40;
 
 export default function InfoScreen() {
   const scrollRef = useRef<ScrollView>(null);
-  
-  // --- MODIFICA 2: Calcolo altezza dinamica (metodo corretto) ---
-  const [locandinaHeight, setLocandinaHeight] = useState(600); // Valore di fallback
-
+  const [locandinaHeight, setLocandinaHeight] = useState(600); 
   Image.getSize(LocandinaImageSource, (width, height) => {
     const calculatedHeight = ((screenWidth - padding) / width) * height;
     setLocandinaHeight(calculatedHeight);
-  });
-  
+    });
+
   useFocusEffect(
     React.useCallback(() => {
       scrollRef.current?.scrollTo({ y: 0, animated: false });
@@ -51,16 +47,14 @@ export default function InfoScreen() {
       </LinearGradient>
 
       <View style={styles.content}>
-        
-        <View style={[styles.imageContainer, { marginBottom: 40 }]}>
-          <Image
-            // --- MODIFICA 3: Usa la variabile importata ---
-            source={LocandinaImageSource}
-            style={[styles.locandinaImage, { height: locandinaHeight }]}
-          />
-        </View>
-
-        {/* Sezione Teatro */}
+      <View style={[styles.imageContainer, { marginBottom: 40 }]}>
+      <Image
+        // --- MODIFICA 3: Usa la variabile importata ---
+        source={LocandinaImageSource}
+        style={[styles.locandinaImage, { height: locandinaHeight }]}
+      />
+    </View>
+      
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Il Teatro</Text>
           <View style={styles.infoCard}>
@@ -123,12 +117,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
-    overflow: 'hidden', 
-  },
-  locandinaImage: {
+    overflow: 'hidden',
+    },
+    locandinaImage: {
     width: '100%',
     // L'altezza viene applicata dinamicamente dallo stile del componente
-  },
+    },
   infoCard: {
     backgroundColor: '#FFFFFF',
     padding: 20,

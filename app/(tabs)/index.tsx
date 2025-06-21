@@ -2,7 +2,6 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 
-import LogoImage from '../../assets/images/logo.jpeg';
 import LeftCurtainImage from '../../assets/images/curtain-left.png';
 import RightCurtainImage from '../../assets/images/curtain-right.png';
 
@@ -50,9 +49,6 @@ export default function HomeScreen() {
       >
         {/* CORREZIONE 2 (CRITICA): Tutto il contenuto ora è DENTRO questo View */}
       <View style={styles.content}>
-          <View style={styles.logoContainer}>
-            <Image source={LogoImage} style={styles.logo} resizeMode="contain" />
-          </View> 
          
           
           <View style={styles.textSection}>
@@ -121,16 +117,6 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 0, 
     paddingTop: 5,
-  },
-  logoContainer: {
-    width: '100%',
-    marginTop: 5,
-    marginBottom: 5,
-  },
-  logo: {
-    width: '100%',
-  height: undefined,
-  aspectRatio: 1, 
   },
   textSection: {
     marginBottom: 40, 
