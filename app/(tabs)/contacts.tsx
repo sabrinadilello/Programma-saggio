@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   imageContainer: {
-    marginBottom: 30,
+    marginBottom: 10,
   },
   mainImage: {
     width: '100%',
