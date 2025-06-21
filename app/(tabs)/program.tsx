@@ -18,23 +18,23 @@ interface Choreography {
   description: string;
 }
 
-// Interfaccia aggiornata per includere l'immagine e l'aspectRatio
 interface ProgramSectionData {
   title: string;
   subtitle: string;
   image: ImageSourcePropType;
-  aspectRatio: number; // Aggiunto per il dimensionamento dinamico
+  aspectRatio: number; // Ora rappresenta l'aspect ratio del CONTENITORE VISUALE
   description: string;
   choreographies: Choreography[];
 }
 
-// Array di dati unificato: contiene già immagini e aspectRatio
+// Ho stimato questi valori per un look ottimale su mobile.
+// Puoi aggiustarli leggermente se necessario (es. 1.4, 1.6, ecc.)
 const programData: ProgramSectionData[] = [
   {
     title: '🎬 PRIMO TEMPO',
     subtitle: 'Alice nel Paese delle Meraviglie',
     image: AliceImage,
-    aspectRatio: 1024 / 724, // Calcolato dalle dimensioni reali: larghezza / altezza
+    aspectRatio: 1.5, // Un buon rapporto per mobile (più alto che largo)
     description: "Un primo atto ispirato all’universo visionario di Alice nel Paese delle Meraviglie, tra simbolismi, follia e trasformazioni. In un mondo capovolto dove il tempo si perde, le identità si confondono e ogni incontro lascia un segno, la danza diventa il linguaggio per attraversare sogni, paure e meraviglie.",
     choreographies: [
       { title: "ALICE – BALLETTO IN UN ATTO", courses: "Corsi: Gioco danza, Propedeutico, Accademico 1, 2 e 3", choreographer: "Coreografia: Matteo D’Alessio e Danila Valentini", description: "Alice, una bambina sognatrice e ribelle, è con la sorella in un giardino soleggiato, colmo di fiori e colori. Mentre la sorella legge un libro, Alice si distrae e si lascia trasportare dai pensieri: in lei nasce il desiderio di un mondo fatto solo di meraviglie, dove tutto è possibile. D’improvviso, un Coniglio Bianco vestito elegantemente le corre davanti, “È tardi, è tardi!” esclama agitato. Incuriosita, Alice lo segue e cade in una lunga tana, precipitando in un mondo assurdo e meraviglioso. Bevande misteriose e dolcetti la fanno rimpicciolire e ingrandire a dismisura.\n\nConfusa e sconvolta, Alice piange, e dalle sue lacrime nasce un vero e proprio mare. Nel mare di lacrime, Alice nuota insieme a strani animali: un topo filosofo, un pappagallo saputello, una lucertola nervosa e un giovane aquilotto. Una volta raggiunta la riva, decidono che il modo migliore per asciugarsi è… una maratona senza senso, in cui tutti corrono in tondo senza mai fermarsi.\n\nNel suo viaggio, Alice incontra creature stravaganti e ambienti sempre più bizzarri: Pinco Panco e Panco Pinco, due gemelli che parlano in rima, si contraddicono e raccontano storie senza capo né coda, lasciando Alice ancora più confusa, un bruco filosofico, un giardino in cui i fiori parlano e cantano, ma escludono Alice perché non è uno di loro. Poi, uno strano Gatto dal sorriso inquietante: lo Stregatto, che le appare e scompare indicando mille direzioni… senza darne nessuna. Al centro di questo mondo eccentrico c’è il tè senza fine del Cappellaio Matto e del Leprotto Marzolino, un banchetto surreale dove il tempo sembra essersi fermato. Ma le stranezze non sono finite.\n\nAlice si ritrova nella reggia della Regina di Cuori, una sovrana bizzarra e collerica che comanda un esercito di carte da gioco. Le carte, trasformate in soldati e guardiani, marciano e sorvegliano il giardino come se fosse un campo di battaglia. Alice, disorientata, non capisce dove sia finita e, per non dare nell’occhio, prova a mimetizzarsi tra le carte. La Regina però la scorge subito e, con un sorriso tanto curioso quanto inquietante, la invita a giocare a croquet. Ma non è un croquet qualunque: le mazze sono fenicotteri vivi, le palline sono ricci e il campo è un groviglio caotico di comandi e urla. Nonostante tutto, Alice riesce a vincere la partita, e la Regina, furiosa, urla il suo celebre verdetto: “Tagliatele la testa!” Per far le cose con ordine, viene indetto un processo. Al banco dei testimoni sfilano uno dopo l’altro tutti i personaggi che Alice ha incontrato nel suo viaggio: ciascuno porta strane accuse, racconti sconclusionati e versioni diverse dei fatti. Il tribunale è una farsa, ma la Regina è implacabile. “Tagliatele la testa!” grida di nuovo, al culmine della sua furia.\n\nAlice allora fugge. Corre via mentre le carte-soldato la inseguono, tutto le gira intorno, i volti, le voci, le risate… fino a quando, all’improvviso, si risveglia. È di nuovo nel giardino, accanto alla sorella, come se nulla fosse accaduto. Forse era solo un sogno. O forse no." },
@@ -47,7 +47,7 @@ const programData: ProgramSectionData[] = [
     title: '🎬 SECONDO TEMPO',
     subtitle: 'Chicago',
     image: ChicagoImage,
-    aspectRatio: 1280 / 364, // Calcolato dalle dimensioni reali: larghezza / altezza
+    aspectRatio: 3.5, // Questa è molto larga, quindi il rapporto è alto
     description: "Tra paillettes, jazz e crimini a ritmo di danza, il secondo tempo è un viaggio nell’anima ribelle del musical più iconico di Broadway. Uno spettacolo carico di grinta, ironia e glamour.",
     choreographies: [
       { title: 'IERI COME OGGI: CALYPSO – ANALOG SOL', courses: "Corso: contemporaneo 3", choreographer: "Coreografia: Matteo D’Alessio", description: "La città corre: tra folla, silenzi e relazioni che si sfiorano senza toccarsi." },
@@ -79,7 +79,6 @@ const ChoreographyItem = ({ title, courses, choreographer, description }: Choreo
   );
 };
 
-// Componente semplificato: non ha più bisogno di imageHeight
 interface ProgramSectionProps {
   section: ProgramSectionData;
 }
@@ -90,11 +89,12 @@ const ProgramSection = ({ section }: ProgramSectionProps) => (
       <Text style={styles.sectionTitle}>{section.title}</Text>
       <Text style={styles.sectionSubtitle}>{section.subtitle}</Text>
     </View>
-    <View style={styles.imageContainer}>
+    {/* MODIFICA CHIAVE: Applichiamo lo stile al contenitore <View> */}
+    <View style={[styles.imageContainer, { aspectRatio: section.aspectRatio }]}>
       <Image
         source={section.image}
-        style={[styles.sectionImage, { aspectRatio: section.aspectRatio }]} // Applica l'aspectRatio
-        resizeMode="contain"
+        style={styles.sectionImage} // Lo stile dell'immagine ora è separato
+        resizeMode="cover" // Questa è la modalità che "taglia" l'eccesso
       />
     </View>
     <View style={styles.descriptionCard}>
@@ -110,8 +110,6 @@ export default function ProgramScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const [renderKey, setRenderKey] = useState(0);
 
-  // Rimossa tutta la logica di Image.getSize e lo stato imageHeights
-  
   useFocusEffect(
     useCallback(() => {
       scrollRef.current?.scrollTo({ y: 0, animated: false });
@@ -133,7 +131,6 @@ export default function ProgramScreen() {
       </LinearGradient>
 
       <View style={styles.content} key={renderKey}>
-        {/* Rendering semplificato, direttamente dall'array di dati principale */}
         <ProgramSection section={programData[0]} />
         <ProgramSection section={programData[1]} />
 
@@ -169,11 +166,18 @@ const styles = StyleSheet.create({
   sectionHeader: { marginBottom: 20 },
   sectionTitle: { fontSize: 24, fontFamily: 'Inter-Bold', color: '#c8151b', textAlign: 'center', marginBottom: 8 },
   sectionSubtitle: { fontSize: 20, fontFamily: 'Inter-SemiBold', color: '#1A1A1A', textAlign: 'center' },
-  imageContainer: { marginBottom: 20 }, // Aumentato leggermente il margine per distanziare dalla card
-  sectionImage: { 
-    width: '100%', 
+  // MODIFICA CHIAVE: Stile per il CONTENITORE
+  imageContainer: { 
+    width: '100%',
+    marginBottom: 20,
     borderRadius: 12,
-    // L'altezza è gestita dinamicamente da aspectRatio, quindi non va definita qui
+    overflow: 'hidden', // La proprietà magica che nasconde l'eccesso
+    backgroundColor: '#e0e0e0', // Un colore di sfondo mentre l'immagine carica
+  },
+  // MODIFICA CHIAVE: Stile per l'IMMAGINE stessa
+  sectionImage: { 
+    width: '100%',
+    height: '100%', // L'immagine riempie il contenitore
   },
   descriptionCard: { backgroundColor: '#FFFFFF', padding: 20, borderRadius: 12, marginBottom: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 4, elevation: 3 },
   description: { fontSize: 16, fontFamily: 'Inter-Regular', color: '#333', lineHeight: 24, textAlign: 'center' },
