@@ -39,12 +39,14 @@ export default function InfoScreen() {
       </LinearGradient>
 
       <View style={styles.content}>
-        {/* Rimosso il View contenitore, lo stile è tutto sull'immagine */}
-        <Image
-          source={LocandinaImageSource}
-          style={styles.locandinaImage}
-          resizeMode="contain"
-        />
+        {/* MODIFICA CHIAVE: Aggiunto il contenitore con la logica corretta */}
+        <View style={styles.imageContainer}>
+          <Image
+            source={LocandinaImageSource}
+            style={styles.locandinaImage}
+            resizeMode="contain"
+          />
+        </View>
       
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Il Teatro</Text>
@@ -101,18 +103,25 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
-  locandinaImage: {
+  // --- MODIFICHE APPLICATE QUI ---
+  imageContainer: {
     width: '100%',
-    borderRadius: 12,
+    // Usiamo il rapporto reale della locandina (1131/1600 ≈ 0.7) per un fit perfetto
+    aspectRatio: 1131 / 1600,
     marginBottom: 40,
-    // Usiamo le dimensioni REALI prese dal tuo screenshot per un risultato perfetto!
-    aspectRatio: 1131 / 1600, 
-    // Aggiungiamo l'ombra direttamente qui
+    borderRadius: 12,
+    overflow: 'hidden', // Per sicurezza
+    backgroundColor: 'transparent',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
+  },
+  locandinaImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 12, // Applichiamo il raggio anche qui per essere sicuri
   },
   infoCard: {
     backgroundColor: '#FFFFFF',
