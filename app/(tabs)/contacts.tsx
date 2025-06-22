@@ -41,12 +41,13 @@ export default function ContactsScreen() {
       </LinearGradient>
 
       <View style={styles.content}>
-        {/* MODIFICA: Rimosso il <View> contenitore. L'immagine ora vive da sola. */}
-        <Image
-          source={StaffImage}
-          style={styles.mainImage}
-          resizeMode="contain" 
-        />
+        <View style={styles.imageContainer}>
+          <Image
+            source={StaffImage}
+            style={styles.mainImage}
+            resizeMode="contain"
+          />
+        </View>
 
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
@@ -150,12 +151,17 @@ const styles = StyleSheet.create({
   content: {
     padding: 20,
   },
-  // MODIFICA: Ora c'è solo uno stile per l'immagine, pulito e senza conflitti.
+  imageContainer: {
+    width: '100%',
+    aspectRatio: 1.6,
+    marginBottom: 30,
+    borderRadius: 12,
+    overflow: 'hidden',
+    backgroundColor: 'transparent',
+  },
   mainImage: {
     width: '100%',
-    aspectRatio: 1600 / 602, // Usa le dimensioni reali del tuo file
-    borderRadius: 12,
-    marginBottom: 30,
+    height: '100%',
   },
   section: {
     marginBottom: 30,

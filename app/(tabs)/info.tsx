@@ -1,22 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useFocusEffect } from 'expo-router';
-import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity, Linking, Platform, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Platform, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Info as InfoIcon, MapPin, ExternalLink } from 'lucide-react-native';
 
 import LocandinaImageSource from '../../assets/images/locandina.jpg';
 
-const screenWidth = Dimensions.get('window').width;
-const padding = 40; 
-
 export default function InfoScreen() {
   const scrollRef = useRef<ScrollView>(null);
-  const [locandinaHeight, setLocandinaHeight] = useState(600); 
-  Image.getSize(LocandinaImageSource, (width, height) => {
-    const calculatedHeight = ((screenWidth - padding) / width) * height;
-    setLocandinaHeight(calculatedHeight);
-    });
-
+  
   useFocusEffect(
     React.useCallback(() => {
       scrollRef.current?.scrollTo({ y: 0, animated: false });
@@ -47,13 +39,12 @@ export default function InfoScreen() {
       </LinearGradient>
 
       <View style={styles.content}>
-      <View style={[styles.imageContainer, { marginBottom: 40 }]}>
-      <Image
-        // --- MODIFICA 3: Usa la variabile importata ---
-        source={LocandinaImageSource}
-        style={[styles.locandinaImage, { height: locandinaHeight }]}
-      />
-    </View>
+        {/* Rimosso il View contenitore, lo stile è tutto sull'immagine */}
+        <Image
+          source={LocandinaImageSource}
+          style={styles.locandinaImage}
+          resizeMode="contain"
+        />
       
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Il Teatro</Text>
@@ -110,19 +101,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
-  imageContainer: {
+  locandinaImage: {
+    width: '100%',
     borderRadius: 12,
+    marginBottom: 40,
+    // Usiamo le dimensioni REALI prese dal tuo screenshot per un risultato perfetto!
+    aspectRatio: 1131 / 1600, 
+    // Aggiungiamo l'ombra direttamente qui
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
-    overflow: 'hidden',
-    },
-    locandinaImage: {
-    width: '100%',
-    // L'altezza viene applicata dinamicamente dallo stile del componente
-    },
+  },
   infoCard: {
     backgroundColor: '#FFFFFF',
     padding: 20,
