@@ -2,7 +2,7 @@ import React, { useRef, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Easing, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 
-import LogoImage from '../../assets/images/logo.jpeg'; 
+import LogoImage from '../../assets/images/logo.png'; 
 import LeftCurtainImage from '../../assets/images/curtain-left.png';
 import RightCurtainImage from '../../assets/images/curtain-right.png';
 
