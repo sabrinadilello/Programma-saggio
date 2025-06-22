@@ -9,8 +9,6 @@ import StaffImage from '../../assets/images/staff.jpg';
 export default function ContactsScreen() {
   const scrollRef = useRef<ScrollView>(null);
   
-  // RIMOSSA la logica problematica con useState e Image.getSize
-
   useFocusEffect(
     React.useCallback(() => {
       scrollRef.current?.scrollTo({ y: 0, animated: false });
@@ -43,15 +41,12 @@ export default function ContactsScreen() {
       </LinearGradient>
 
       <View style={styles.content}>
-        {/* MODIFICA CHIAVE: Applichiamo lo stile al contenitore <View> */}
-        {/* Ho scelto 1.6 come aspectRatio, un valore comune per le foto. Puoi cambiarlo se vuoi. */}
-        <View style={[styles.imageContainer, { aspectRatio: 1.6 }]}>
-          <Image
-            source={StaffImage}
-            style={styles.mainImage}
-            resizeMode="cover" // "Taglia" l'eccesso per riempire lo spazio
-          />
-        </View>
+        {/* MODIFICA: Rimosso il <View> contenitore. L'immagine ora vive da sola. */}
+        <Image
+          source={StaffImage}
+          style={styles.mainImage}
+          resizeMode="contain" 
+        />
 
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
@@ -155,18 +150,12 @@ const styles = StyleSheet.create({
   content: {
     padding: 20,
   },
-  // MODIFICA CHIAVE: Stile per il CONTENITORE dell'immagine
-  imageContainer: {
-    width: '100%',
-    marginBottom: 30,
-    borderRadius: 12,
-    overflow: 'hidden', // Nasconde le parti dell'immagine che escono fuori
-    backgroundColor: '#e0e0e0', // Placeholder
-  },
-  // MODIFICA CHIAVE: Stile per l'IMMAGINE stessa
+  // MODIFICA: Ora c'è solo uno stile per l'immagine, pulito e senza conflitti.
   mainImage: {
     width: '100%',
-    height: '100%', // Fa in modo che l'immagine riempia il contenitore
+    aspectRatio: 1600 / 602, // Usa le dimensioni reali del tuo file
+    borderRadius: 12,
+    marginBottom: 30,
   },
   section: {
     marginBottom: 30,

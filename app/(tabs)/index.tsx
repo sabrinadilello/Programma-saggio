@@ -2,6 +2,7 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 
+import LogoImage from '../../assets/images/logo.jpeg'; 
 import LeftCurtainImage from '../../assets/images/curtain-left.png';
 import RightCurtainImage from '../../assets/images/curtain-right.png';
 
@@ -12,6 +13,17 @@ export default function HomeScreen() {
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false); 
 
+  const [logoHeight, setLogoHeight] = useState<number | undefined>(undefined);
+  useEffect(() => {
+  const assetSource = Image.resolveAssetSource(LogoImage);
+  if (assetSource?.uri) {
+  Image.getSize(assetSource.uri, (width, height) => {
+  const padding = 40;
+  const calculatedHeight = ((screenWidth - padding) / width) * height;
+  setLogoHeight(calculatedHeight);
+  });
+  }
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -47,9 +59,13 @@ export default function HomeScreen() {
         scrollEnabled={isAnimationComplete}
         removeClippedSubviews={false}
       >
-        {/* CORREZIONE 2 (CRITICA): Tutto il contenuto ora è DENTRO questo View */}
+
       <View style={styles.content}>
-         
+      <Image
+        source={LogoImage}
+        style={styles.logoImage}
+        resizeMode="contain"
+      />
           
           <View style={styles.textSection}>
             <Text style={styles.introText}>
@@ -84,7 +100,6 @@ export default function HomeScreen() {
             <Text style={styles.signatureTitle}>Direzione Artistica – Centro Studi Arti Sceniche</Text>
           </View>
         </View> 
-        {/* CORREZIONE 3: Il tag </View> di troppo è stato rimosso da qui */}
       </ScrollView>
 
       {/* Il sipario animato */}
@@ -118,9 +133,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0, 
     paddingTop: 5,
   },
+  logoImage: {
+    width: '100%',
+    marginBottom: 7, // Spazio tra logo e testo
+    },
   textSection: {
     marginBottom: 40, 
-    paddingHorizontal: 20, // Aggiungiamo padding solo qui per non staccare il testo dai bordi
+    paddingHorizontal: 20, 
   },
   introText: {
     fontSize: 16,
