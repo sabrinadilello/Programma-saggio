@@ -51,11 +51,15 @@ export default function HomeScreen() {
       >
 
       <View style={styles.content}>
-        <Image
-          source={LogoImage}
-          style={styles.logoImage} // Lo stile ora è unico e basato sui dati reali.
-          resizeMode="contain" // Questo garantisce che non venga mai tagliata.
-        />
+        {/* MODIFICA APPLICATA: Creiamo un contenitore con un aspectRatio fisso e overflow hidden */}
+        {/* L'immagine all'interno userà "cover" per riempirlo, venendo "tagliata" */}
+        <View style={styles.imageContainer}>
+          <Image
+            source={LogoImage}
+            style={styles.logoImage}
+            resizeMode="contain"
+          />
+        </View>
           
           <View style={styles.textSection}>
             <Text style={styles.introText}>
@@ -122,11 +126,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0, 
     paddingTop: 5,
   },
+  // --- MODIFICHE APPLICATE QUI ---
+  imageContainer: {
+    width: '100%',
+    aspectRatio: 1.6, // Questa è la forma della "finestra". Puoi cambiarla (es: 2.0 per più larga)
+    marginBottom: 30,
+    overflow: 'hidden', // Nasconde le parti del logo che escono
+  },
   logoImage: {
     width: '100%',
-    marginBottom: 20,
-    // Usiamo le dimensioni reali prese dallo screenshot per un risultato perfetto!
-    aspectRatio: 1576 / 619, 
+    height: '100%', // L'immagine riempie il suo contenitore
   },
   textSection: {
     marginBottom: 40, 
