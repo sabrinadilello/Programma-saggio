@@ -1,31 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useFocusEffect } from 'expo-router';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Linking, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MapPin, Phone, Mail, Globe, Instagram, Facebook, ExternalLink } from 'lucide-react-native';
 
-// --- MODIFICA 1: Importa l'immagine come un modulo ---
-// Questo è il metodo corretto che funziona sia su mobile che su web
 import StaffImage from '../../assets/images/staff.jpg';
-
-// --- MODIFICA 2: Calcoli dinamici per l'altezza ---
-// Questo rimane invariato, useremo i dati dell'immagine in un altro modo
-const screenWidth = Dimensions.get('window').width;
 
 export default function ContactsScreen() {
   const scrollRef = useRef<ScrollView>(null);
   
-  // --- MODIFICA 3: Usiamo lo state per gestire l'altezza dell'immagine ---
-  const [imageHeight, setImageHeight] = useState(300); // Un valore di fallback
+  // RIMOSSA la logica problematica con useState e Image.getSize
 
-  // Calcoliamo l'altezza corretta solo dopo aver ottenuto le dimensioni dell'immagine
-Image.getSize(StaffImage, (width, height) => {
-  // Calcoliamo l'altezza che l'immagine deve avere per mantenere le proporzioni
-  // quando la sua larghezza è pari a quella dello schermo (meno il padding)
-  const calculatedHeight = ((screenWidth - 40) / width) * height;
-  setImageHeight(calculatedHeight);
-  });
-  
   useFocusEffect(
     React.useCallback(() => {
       scrollRef.current?.scrollTo({ y: 0, animated: false });
@@ -48,7 +33,8 @@ Image.getSize(StaffImage, (width, height) => {
     <ScrollView
       ref={scrollRef}
       style={styles.container}
-      contentContainerStyle={styles.scrollContentContainer}>
+      contentContainerStyle={styles.scrollContentContainer}
+      >
       <LinearGradient colors={['#1A1A1A', '#c8151b']} style={styles.header}>
         <View style={styles.headerContent}>
           <Phone size={48} color="#D4AF37" />
@@ -57,17 +43,16 @@ Image.getSize(StaffImage, (width, height) => {
       </LinearGradient>
 
       <View style={styles.content}>
-        <View style={styles.imageContainer}>
+        {/* MODIFICA CHIAVE: Applichiamo lo stile al contenitore <View> */}
+        {/* Ho scelto 1.6 come aspectRatio, un valore comune per le foto. Puoi cambiarlo se vuoi. */}
+        <View style={[styles.imageContainer, { aspectRatio: 1.6 }]}>
           <Image
-            // --- MODIFICA 4: Usiamo la variabile importata ---
             source={StaffImage}
-            // Applichiamo lo stile con l'altezza calcolata dinamicamente
-            style={[styles.mainImage, { height: imageHeight }]}
-            resizeMode="contain"
+            style={styles.mainImage}
+            resizeMode="cover" // "Taglia" l'eccesso per riempire lo spazio
           />
         </View>
 
-        {/* ... il resto del tuo codice rimane identico ... */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <MapPin size={32} color="#c8151b" />
@@ -139,8 +124,7 @@ Image.getSize(StaffImage, (width, height) => {
             </View>
           </TouchableOpacity>
         </View>
-
-      </View>
+      </View> 
     </ScrollView>
   );
 }
@@ -171,14 +155,18 @@ const styles = StyleSheet.create({
   content: {
     padding: 20,
   },
+  // MODIFICA CHIAVE: Stile per il CONTENITORE dell'immagine
   imageContainer: {
-    marginBottom: 10,
+    width: '100%',
+    marginBottom: 30,
+    borderRadius: 12,
+    overflow: 'hidden', // Nasconde le parti dell'immagine che escono fuori
+    backgroundColor: '#e0e0e0', // Placeholder
   },
+  // MODIFICA CHIAVE: Stile per l'IMMAGINE stessa
   mainImage: {
     width: '100%',
-    borderRadius: 12,
-    // --- MODIFICA 5: L'altezza viene applicata dinamicamente ---
-    // Rimuoviamo l'altezza da qui, perché la passiamo direttamente allo stile del componente
+    height: '100%', // Fa in modo che l'immagine riempia il contenitore
   },
   section: {
     marginBottom: 30,
@@ -234,19 +222,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-SemiBold',
     color: '#c8151b',
     marginRight: 8,
-  },
-  footer: {
-    backgroundColor: '#1A1A1A',
-    padding: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  footerText: {
-    fontSize: 16,
-    fontFamily: 'Inter-SemiBold',
-    color: '#D4AF37',
-    textAlign: 'center',
-    lineHeight: 24,
   },
 });
