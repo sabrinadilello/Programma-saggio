@@ -1,32 +1,24 @@
-import React, { useRef, useState, useCallback, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, Easing, Image } from 'react-native';
+import React, { useRef, useState, useCallback } from 'react';
+import { View, Text, StyleSheet, ScrollView, Animated, Easing, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 
+// L'importazione è già corretta, come nelle altre pagine
 import LogoImage from '../../assets/images/logo.jpeg'; 
 import LeftCurtainImage from '../../assets/images/curtain-left.png';
 import RightCurtainImage from '../../assets/images/curtain-right.png';
-
-const { width: screenWidth } = Dimensions.get('window');
 
 export default function HomeScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false); 
 
-  const [logoHeight, setLogoHeight] = useState<number | undefined>(undefined);
-  useEffect(() => {
-  const assetSource = Image.resolveAssetSource(LogoImage);
-  if (assetSource?.uri) {
-  Image.getSize(assetSource.uri, (width, height) => {
-  const padding = 40;
-  const calculatedHeight = ((screenWidth - padding) / width) * height;
-  setLogoHeight(calculatedHeight);
-  });
-  }
-  }, []);
+  // RIMOSSA TUTTA LA LOGICA PROBLEMATICA CON useEffect, useState e Image.getSize
 
   useFocusEffect(
     useCallback(() => {
+      // Troviamo la larghezza dello schermo qui, solo quando serve
+      const screenWidth = require('react-native').Dimensions.get('window').width;
+
       curtainAnimation.setValue(0);
       setIsAnimationComplete(false);
       
@@ -37,6 +29,7 @@ export default function HomeScreen() {
         easing: Easing.inOut(Easing.quad),
         useNativeDriver: false,
       });
+
       animation.start(() => setIsAnimationComplete(true));
 
       return () => {
@@ -44,9 +37,11 @@ export default function HomeScreen() {
         curtainAnimation.setValue(0);
         setIsAnimationComplete(false);
       };
-    }, [])
+    }, [curtainAnimation])
   );
-
+  
+  // Questa logica rimane invariata ma deve accedere alla larghezza dello schermo
+  const screenWidth = require('react-native').Dimensions.get('window').width;
   const leftCurtainTranslateX = curtainAnimation.interpolate({ inputRange: [0, 1], outputRange: [0, -screenWidth / 2] });
   const rightCurtainTranslateX = curtainAnimation.interpolate({ inputRange: [0, 1], outputRange: [0, screenWidth / 2] });
   const curtainOpacity = curtainAnimation.interpolate({ inputRange: [0, 0.7, 1], outputRange: [1, 1, 0] });
@@ -61,11 +56,11 @@ export default function HomeScreen() {
       >
 
       <View style={styles.content}>
-      <Image
-        source={LogoImage}
-        style={styles.logoImage}
-        resizeMode="contain"
-      />
+        <Image
+          source={LogoImage}
+          style={styles.logoImage} // Ora lo stile è tutto qui, pulito e semplice
+          resizeMode="contain"
+        />
           
           <View style={styles.textSection}>
             <Text style={styles.introText}>
@@ -102,7 +97,6 @@ export default function HomeScreen() {
         </View> 
       </ScrollView>
 
-      {/* Il sipario animato */}
       {!isAnimationComplete && (
         <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
           <Animated.Image 
@@ -133,10 +127,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0, 
     paddingTop: 5,
   },
+  // MODIFICA DEFINITIVA
   logoImage: {
     width: '100%',
-    marginBottom: 7, // Spazio tra logo e testo
-    },
+    marginBottom: 7,
+    // !!! MODIFICA QUESTO VALORE !!!
+    // Sostituisci 1600 e 400 con la larghezza e l'altezza reali del tuo file logo.jpeg
+    aspectRatio: 1600 / 400,
+  },
   textSection: {
     marginBottom: 40, 
     paddingHorizontal: 20, 
