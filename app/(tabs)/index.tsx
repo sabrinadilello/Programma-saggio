@@ -6,16 +6,15 @@ import LogoImage from '../../assets/images/logo.jpeg';
 import LeftCurtainImage from '../../assets/images/curtain-left.png';
 import RightCurtainImage from '../../assets/images/curtain-right.png';
 
-
-
 export default function HomeScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false); 
 
-
   useFocusEffect(
     useCallback(() => {
+      const screenWidth = require('react-native').Dimensions.get('window').width;
+
       curtainAnimation.setValue(0);
       setIsAnimationComplete(false);
       
@@ -26,6 +25,7 @@ export default function HomeScreen() {
         easing: Easing.inOut(Easing.quad),
         useNativeDriver: false,
       });
+
       animation.start(() => setIsAnimationComplete(true));
 
       return () => {
@@ -35,7 +35,6 @@ export default function HomeScreen() {
       };
     }, [curtainAnimation])
   );
-  
   
   const screenWidth = require('react-native').Dimensions.get('window').width;
   const leftCurtainTranslateX = curtainAnimation.interpolate({ inputRange: [0, 1], outputRange: [0, -screenWidth / 2] });
@@ -52,11 +51,15 @@ export default function HomeScreen() {
       >
 
       <View style={styles.content}>
-        <Image
-          source={LogoImage}
-          style={styles.logoImage} // Lo stile ora è unico, pulito e corretto.
-          resizeMode="contain" // Fondamentale per vedere il logo per intero.
-        />
+        {/* MODIFICA APPLICATA: Creiamo un contenitore con un aspectRatio fisso e overflow hidden */}
+        {/* L'immagine all'interno userà "cover" per riempirlo, venendo "tagliata" */}
+        <View style={styles.imageContainer}>
+          <Image
+            source={LogoImage}
+            style={styles.logoImage}
+            resizeMode="cover"
+          />
+        </View>
           
           <View style={styles.textSection}>
             <Text style={styles.introText}>
@@ -123,10 +126,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0, 
     paddingTop: 5,
   },
+  // --- MODIFICHE APPLICATE QUI ---
+  imageContainer: {
+    width: '100%',
+    aspectRatio: 1.6, // Questa è la forma della "finestra". Puoi cambiarla (es: 2.0 per più larga)
+    marginBottom: 30,
+    overflow: 'hidden', // Nasconde le parti del logo che escono
+  },
   logoImage: {
     width: '100%',
-    marginBottom: 20,
-    aspectRatio: 1600 / 602, 
+    height: '100%', // L'immagine riempie il suo contenitore
   },
   textSection: {
     marginBottom: 40, 
