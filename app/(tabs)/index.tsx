@@ -2,23 +2,20 @@ import React, { useRef, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Easing, Image } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 
-// L'importazione è già corretta, come nelle altre pagine
 import LogoImage from '../../assets/images/logo.jpeg'; 
 import LeftCurtainImage from '../../assets/images/curtain-left.png';
 import RightCurtainImage from '../../assets/images/curtain-right.png';
+
+
 
 export default function HomeScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const curtainAnimation = useRef(new Animated.Value(0)).current;
   const [isAnimationComplete, setIsAnimationComplete] = useState(false); 
 
-  // RIMOSSA TUTTA LA LOGICA PROBLEMATICA CON useEffect, useState e Image.getSize
 
   useFocusEffect(
     useCallback(() => {
-      // Troviamo la larghezza dello schermo qui, solo quando serve
-      const screenWidth = require('react-native').Dimensions.get('window').width;
-
       curtainAnimation.setValue(0);
       setIsAnimationComplete(false);
       
@@ -29,7 +26,6 @@ export default function HomeScreen() {
         easing: Easing.inOut(Easing.quad),
         useNativeDriver: false,
       });
-
       animation.start(() => setIsAnimationComplete(true));
 
       return () => {
@@ -40,7 +36,7 @@ export default function HomeScreen() {
     }, [curtainAnimation])
   );
   
-  // Questa logica rimane invariata ma deve accedere alla larghezza dello schermo
+  
   const screenWidth = require('react-native').Dimensions.get('window').width;
   const leftCurtainTranslateX = curtainAnimation.interpolate({ inputRange: [0, 1], outputRange: [0, -screenWidth / 2] });
   const rightCurtainTranslateX = curtainAnimation.interpolate({ inputRange: [0, 1], outputRange: [0, screenWidth / 2] });
@@ -58,8 +54,8 @@ export default function HomeScreen() {
       <View style={styles.content}>
         <Image
           source={LogoImage}
-          style={styles.logoImage} // Ora lo stile è tutto qui, pulito e semplice
-          resizeMode="contain"
+          style={styles.logoImage} // Lo stile ora è unico, pulito e corretto.
+          resizeMode="contain" // Fondamentale per vedere il logo per intero.
         />
           
           <View style={styles.textSection}>
@@ -127,13 +123,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0, 
     paddingTop: 5,
   },
-  // MODIFICA DEFINITIVA
   logoImage: {
     width: '100%',
-    marginBottom: 7,
-    // !!! MODIFICA QUESTO VALORE !!!
-    // Sostituisci 1600 e 400 con la larghezza e l'altezza reali del tuo file logo.jpeg
-    aspectRatio: 1600 / 400,
+    marginBottom: 20,
+    aspectRatio: 1600 / 602, 
   },
   textSection: {
     marginBottom: 40, 
