@@ -94,7 +94,7 @@ const ProgramSection = ({ section }: ProgramSectionProps) => (
       <Image
         source={section.image}
         style={styles.sectionImage} // Lo stile dell'immagine ora è separato
-        resizeMode="cover" // Questa è la modalità che "taglia" l'eccesso
+        resizeMode="contain" // Questa è la modalità che "taglia" l'eccesso
       />
     </View>
     <View style={styles.descriptionCard}>
